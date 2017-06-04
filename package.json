@@ -1,7 +1,7 @@
 {
-  "name": "bisheng-plugin-antd",
-  "version": "0.15.0",
-  "description": "To support ant.design-like websites.",
+  "name": "bisheng-plugin-antd-x",
+  "version": "0.1.3",
+  "description": "To support app.design-like websites. Base on bisheng-plugin-antd 0.15.0",
   "scripts": {
     "lint": "eslint ./src",
     "eslint-fix": "eslint --fix ./src",
@@ -22,7 +22,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ant-design/bisheng-plugin-antd.git"
+    "url": "git+https://github.com/app-design/bisheng-plugin-antd-x.git"
   },
   "keywords": [
     "bisheng",
@@ -31,7 +31,7 @@
     "ant",
     "design"
   ],
-  "author": "Benjy Cui",
+  "author": "Benjy Cui, Vision Ken",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ant-design/bisheng-plugin-antd/issues"

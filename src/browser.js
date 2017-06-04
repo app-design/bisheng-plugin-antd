@@ -22,6 +22,9 @@ function makeSureComonentsLink(pathname) {
 }
 
 function toZhCNPathname(pathname) {
+  if (/-cn.html\/?$/.test(pathname)) {
+    return makeSureComonentsLink(pathname);
+  }
   const pathSnippets = pathname.split('#');
   pathSnippets[0] = `${pathSnippets[0].replace(/\/$/, '')}-cn`;
   return makeSureComonentsLink(pathSnippets.join('#'));
