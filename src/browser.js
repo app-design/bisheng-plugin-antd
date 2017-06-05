@@ -70,10 +70,16 @@ module.exports = (_, props) =>
           /^#/.test(JsonML.getAttributes(node).href)
        ), (node, index) => {
          const href = JsonML.getAttributes(node).href;
+
+         // https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/modules/Link.js
+         const title = JsonML.getAttributes(node).title;
+         const target = (title && title.indexOf('target=') > -1) ? title.split('=')[1] : null;
+
          return (
            <Link
              to={isZhCN(props.location.pathname) ? toZhCNPathname(href) : makeSureComonentsLink(href)}
              key={index}
+             target={target}
            >
              {toReactElement(JsonML.getChildren(node)[0])}
            </Link>
