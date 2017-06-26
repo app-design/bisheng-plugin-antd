@@ -63,12 +63,32 @@ module.exports = (_, props) =>
        [node => JsonML.isElement(node) && JsonML.getTagName(node) === 'video', (node, index) =>
          <VideoPlayer video={JsonML.getAttributes(node)} key={index} />,
        ],
+       [node => JsonML.isElement(node) && JsonML.getTagName(node) === 'a' && (
+         JsonML.getAttributes(node).class ||
+         (JsonML.getAttributes(node).href &&
+         JsonML.getAttributes(node).href.indexOf('http') === 0)
+       ), (node, index) => { // 对以http开头的外链做处理
+         const href = JsonML.getAttributes(node).href;
+         let title = JsonML.getAttributes(node).title;
+         const target = (title && title.indexOf('target=') > -1) ? title.split('=')[1] : null;
+         title = (title && title.indexOf('target=') > -1) ? null : title;
+
+         return (
+           <a
+             href={href}
+             key={index}
+             target={target}
+             title={title} >
+             {toReactElement(JsonML.getChildren(node)[0])}
+           </a>
+         );
+       }],
        [node => JsonML.isElement(node) && JsonML.getTagName(node) === 'a' && !(
         JsonML.getAttributes(node).class ||
           (JsonML.getAttributes(node).href &&
            JsonML.getAttributes(node).href.indexOf('http') === 0) ||
           /^#/.test(JsonML.getAttributes(node).href)
-       ), (node, index) => {
+       ), (node, index) => { // 对不以http和#开头的站内链接做处理
          const href = JsonML.getAttributes(node).href;
 
          // https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/modules/Link.js
@@ -79,8 +99,7 @@ module.exports = (_, props) =>
            <Link
              to={isZhCN(props.location.pathname) ? toZhCNPathname(href) : makeSureComonentsLink(href)}
              key={index}
-             target={target}
-           >
+             target={target} >
              {toReactElement(JsonML.getChildren(node)[0])}
            </Link>
          );
